@@ -1,19 +1,33 @@
-const Router = require("express").Router
+const express = require('express');
 
-const contatosFunctions = require("../controllers/contatosController")
+const router = express.Router();
 
-const contatosRoute = Router()
+const contatoController = require('../controllers/contatoController');
 
-contatosRoute.get("/", async (req,res)=>{
-    const allContatos = await contatosFunctions.getAllContatosController()
 
-    return res.send(allContatos)
-})
+// GET /api/contatos
 
-contatosRoute.post("/create", async (req,res)=>{
-    await contatosFunctions.createContatoController(req.body)
+router.get('/', contatoController.getAllContatos);
 
-    return {msg: "Sucesso ao criar contato"}
-})
 
-module.exports = contatosRoute
+// GET /api/contatos/:id
+
+router.get('/:id', contatoController.getContatoById);
+
+
+// POST /api/contatos
+
+router.post('/', contatoController.createContato);
+
+
+// PUT /api/contatos/:id
+
+router.put('/:id', contatoController.updateContato);
+
+
+// DELETE /api/contatos/:id
+
+router.delete('/:id', contatoController.deleteContato);
+
+
+module.exports = router;
